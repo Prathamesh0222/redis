@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "../ui/resizable";
 import { cn } from "@/lib/utils";
+import Sidebar from "../Sidebar";
+import MessageContainer from "./MessageContainer";
+
 
 interface ChatLayoutProps{
     defaultLayout: number[] | undefined;
@@ -47,18 +50,19 @@ const ChatLayout = ({defaultLayout=[320,480]}:ChatLayoutProps) => {
         }}
         className={cn(isCollapsed && "min-w-[80px] transition-all duration-300 ease-in-out")}
         >
-            Sidebar
+            <Sidebar isCollapsed={isCollapsed} />
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel
         defaultSize={defaultLayout[1]}
         minSize={30}
         >
-            <div className="flex justify-center items-center h-full w-full px-10">
+            {/* <div className="flex justify-center items-center h-full w-full px-10">
                 <div className="flex flex-col justify-center items-center gap-4">
                     <p className="text-muted-foreground text-center">Click on a chat to view the messaeges</p>
                 </div>
-            </div>
+            </div> */}
+            <MessageContainer/>
         </ResizablePanel>
         
 
