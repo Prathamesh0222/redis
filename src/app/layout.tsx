@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import {ThemeProvider} from "next-themes";
 import React from "react";
+import TanStackProvider from "@/components/providers/TanStackProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
       >
+        <TanStackProvider>
         {children}
+        </TanStackProvider>
       </ThemeProvider>
       </body>
       </html>

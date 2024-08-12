@@ -1,8 +1,18 @@
 import ChatLayout from "@/components/chat/ChatLayout";
 import PreferencesTab from "@/components/ui/PreferencesTab";
+import { redis } from "@/lib/db";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+  // await redis.set("rat","bar");
+  // const data = await redis.get("rat");
+  // console.log(data);
+  const {isAuthenticated} = getKindeServerSession();
+  if(!await isAuthenticated()) {
+    return redirect("/auth");
+  }
   const layout = cookies().get("react-resizable-panels:layout");
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
   return (
