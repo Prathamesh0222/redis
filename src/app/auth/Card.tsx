@@ -9,7 +9,7 @@ const Card = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="size-12 pl-4"
+            className="size-12 pl-4 text-black"
           >
             <path
               strokeLinecap="round"
@@ -18,12 +18,12 @@ const Card = () => {
             />
           </svg>
 
-          <div className="flex pl-2.5">
+          <div className="flex pl-2.5 text-black">
             <span className="text-2xl font-semibold pl-2">
               Secure Messaging
             </span>
-          </div>
-          <span className="flex pt-2 pb-4 pl-[1.2rem] pr-2 text-md justify-center">
+          </div> 
+          <span className="text-black flex pt-2 pb-4 pl-[1.2rem] pr-2 text-md justify-center">
             Your conversations are protected with end-to-end encryption.
           </span>
         </div>
@@ -34,7 +34,7 @@ const Card = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="size-12 pl-4"
+            className="size-12 pl-4 text-black"
           >
             <path
               strokeLinecap="round"
@@ -42,10 +42,10 @@ const Card = () => {
               d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
             />
           </svg>
-          <div className="flex">
+          <div className="flex text-black">
             <span className="text-2xl font-semibold lg:px-5">File Sharing</span>
           </div>
-          <span className="flex pt-2 pb-6 px-5 text-md justify-center">
+          <span className="text-black flex pt-2 pb-6 px-5 text-md justify-center">
             Share documents, images, and other files with your team.
           </span>
         </div>
@@ -59,7 +59,7 @@ const Card = () => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-12 pl-4"
+              className="size-12 pl-4 text-black"
             >
               <path
                 strokeLinecap="round"
@@ -68,12 +68,12 @@ const Card = () => {
               />
             </svg>
 
-            <div className="flex">
+            <div className="flex text-black">
               <span className="text-2xl font-semibold lg:px-5">
                 Real-Time Chat
               </span>
             </div>
-            <span className="flex pt-2 pb-4 px-5 text-md justify-center">
+            <span className="flex pt-2 pb-4 px-5 text-md justify-center text-black">
               Engage in seamless conversations with our real-time chat feature.
             </span>
           </div>
@@ -84,7 +84,7 @@ const Card = () => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-12 pl-4"
+              className="size-12 pl-4 text-black"
             >
               <path
                 strokeLinecap="round"
@@ -93,12 +93,12 @@ const Card = () => {
               />
             </svg>
 
-            <div className="flex">
+            <div className="flex dark:text-black">
               <span className="text-2xl font-semibold lg:px-5">
                 Express with Emojis
               </span>
             </div>
-            <span className="flex pt-2 pb-6 px-5 text-md justify-center">
+            <span className="flex pt-2 pb-6 px-5 text-md justify-center text-black">
             Express yourself with emoji feature, adding emotion to your conversations.
             </span>
           </div>

@@ -10,6 +10,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
+import useSound from "use-sound";
+import { usePreferences } from "@/store/usePreferences";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -17,6 +20,8 @@ interface SidebarProps {
 
 const Sidebar = ({ isCollapsed }: SidebarProps) => {
   const selectedUser = USERS[0];
+  const [playClickSound] = useSound("/sounds/mouse-click.mp3");
+  const {soundEnabled} = usePreferences();
 
   return (
     <div
@@ -36,7 +41,9 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
             <TooltipProvider key={idx}>
               <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
-                  <div>
+                  <div onClick={()=> {
+                    soundEnabled && playClickSound();
+                  }}>
                     <Avatar className="my-1 flex justify-center items-center">
                       <AvatarImage
                         src={user.image || "/user-placeholder.png"}
@@ -66,40 +73,45 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
                 selectedUser.email === user.email &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white shrink"
               )}
+              onClick={()=> {
+                soundEnabled && playClickSound();
+              }}
             >
-                <Avatar className="flex justify-center items-center">
-                  <AvatarImage
-                    src={user.image || "/user-placeholder.png"}
-                    alt="User Image"
-                    className="w-10 h-10"
-                  />
-                  <AvatarFallback>{user.name[0]}</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col max-w-80">
+              <Avatar className="flex justify-center items-center">
+                <AvatarImage
+                  src={user.image || "/user-placeholder.png"}
+                  alt="User Image"
+                  className="w-10 h-10"
+                />
+                <AvatarFallback>{user.name[0]}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col max-w-80">
                 <span>{user.name}</span>
-                </div>
+              </div>
             </Button>
           )
         )}
       </ScrollArea>
       <div className="mt-auto">
         <div className="flex justify-between items-center gap-2 md:px-6 py-2">
-            {!isCollapsed && (
-                <div className="hidden md:flex gap-2 items-center">
-                    <Avatar className="flex justify-center items-center">
-                        <AvatarImage
-                        src={"/user-placeholder.png"}
-                        alt="avatar"
-                        referrerPolicy="no-referrer"
-                        className="w-8 h-8 border-2 border-white rounded-full"
-                        />
-                    </Avatar>
-                    <p className="font-bold">{"John Doe"}</p>
-                </div>
-            )}
-            <div className="flex">
-                <LogOut size={22} cursor={"pointer"}/>
+          {!isCollapsed && (
+            <div className="hidden md:flex gap-2 items-center">
+              <Avatar className="flex justify-center items-center">
+                <AvatarImage
+                  src={"/user-placeholder.png"}
+                  alt="avatar"
+                  referrerPolicy="no-referrer"
+                  className="w-8 h-8 border-2 border-white rounded-full"
+                />
+              </Avatar>
+              <p className="font-bold">{"John Doe"}</p>
             </div>
+          )}
+          <div className="flex">
+            <LogoutLink>
+            <LogOut size={22} cursor={"pointer"} />
+            </LogoutLink>
+          </div>
         </div>
       </div>
     </div>

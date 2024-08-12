@@ -1,9 +1,16 @@
 import React from "react";
 import AuthButton from "./AuthButton";
 import Card from "./Card";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
 
-const page = () => {
+
+const page = async() => {
+  const {isAuthenticated} = getKindeServerSession();
+  if(await isAuthenticated()) {
+    return redirect("/");
+  }
   return (
     <div className="flex h-screen w-full">
       <div
@@ -25,7 +32,7 @@ const page = () => {
       </div>
       </div>
       <div className="flex-1 hidden lg:flex">
-        <div className="bg-white w-full flex justify-center">
+        <div className="bg-white bg-noise w-full flex justify-center">
             <div className="flex flex-col justify-center">
             <span className="text-black font-bold text-6xl xl:text-[3.5rem] lg:px-10 xl:px-20">
                 Seamless Communication.
