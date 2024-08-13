@@ -1,15 +1,29 @@
-import { messages, USERS } from "@/db/dummy";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { AvatarImage, Avatar } from "../ui/avatar";
+import { useSelectedUser } from "@/store/useSelectedUser";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { useQuery } from "@tanstack/react-query";
+import { getMessages } from "@/actions/message.actions";
 
 const MessageList = () => {
-  const selectedUser = USERS[0];
-  const currentUser = USERS[1];
+  const { selectedUser } = useSelectedUser();
+  const { user: currentUser, isLoading: isUserLoading } = useKindeBrowserClient();
+
+  const { data:messages, isLoading: isMessagesLoading } = useQuery({
+    queryKey: ["messages", selectedUser?.id],
+    queryFn: async () => {
+      if(selectedUser && currentUser){
+      return await getMessages(selectedUser?.id, currentUser?.id)
+    }
+  },
+  enabled: !!selectedUser && !!currentUser && !isUserLoading
+  });
+
   return (
     <div className="w-full overflow-y-auto overflow-x-hidden h-full flex flex-col">
       <AnimatePresence>
-        {messages.map((message, idx) => (
+        {messages?.map((message, idx) => (
           <motion.div
             key={idx}
             layout
@@ -30,14 +44,14 @@ const MessageList = () => {
             }}
             className={cn(
               "flex flex-col gap-2 p-4 whitespace-pre-wrap",
-              message.senderId === currentUser.id ? "items-end" : "items-start"
+              message.senderId === currentUser?.id ? "items-end" : "items-start"
             )}
           >
             <div className="flex gap-3 items-center">
-              {message.senderId === selectedUser.id && (
+              {message.senderId === selectedUser?.id && (
                 <Avatar className="flex justify-center items-center">
                   <AvatarImage
-                    src={selectedUser.image}
+                    src={selectedUser?.image}
                     alt="User Image"
                     className="border-2 border-white rounded-full"
                   />
@@ -54,10 +68,10 @@ const MessageList = () => {
                   className="border p-2 rounded h-40 md:h-52 object-cover"
                 />
               )}
-              {message.senderId === currentUser.id && (
+              {message.senderId === currentUser?.id && (
                 <Avatar className="flex justify-center items-center">
                   <AvatarImage
-                    src={currentUser.image}
+                    src={currentUser?.picture || "/user-placeholder.png"}
                     alt="User Image"
                     className="border-2 border-white rounded-full"
                   />
