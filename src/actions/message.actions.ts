@@ -34,17 +34,16 @@ export async function sendMessageAction({ content, messageType, receiverId }: se
     }
 
     const messageId = `message:${Date.now()}:${Math.random().toString(36).substring(2, 9)}`
-    const timestsamp = Date.now();
+    const timestamp = Date.now();
 
     await redis.hset(messageId, {
         senderId,
         content,
-        timestsamp,
+        timestamp,
         messageType
     })
 
-    await redis.zadd(`${conversationId}:messages}`, { score: timestsamp, member: JSON.stringify(messageId) })
-
+    await redis.zadd(`${conversationId}:messages`, { score: timestamp, member: messageId })
     return { success: true, conversationId, messageId }
 }
 
@@ -52,10 +51,10 @@ export async function getMessages(selectedUserId: string, currentUserId: string)
     const conversationId = `conversation:${[selectedUserId, currentUserId].sort().join(":")}`;
     const messageIds = await redis.zrange(`${conversationId}:messages`, 0, -1);
 
-    if (messageIds.length === 0) return [];
+    if (messageIds?.length === 0) return [];
 
     const pipeline = redis.pipeline();
-    messageIds.forEach((messageId) => pipeline.hgetall(messageId as string));
+    messageIds?.forEach((messageId) => pipeline.hgetall(messageId as string));
     const messages = (await pipeline.exec()) as Message[];
 
     return messages;
