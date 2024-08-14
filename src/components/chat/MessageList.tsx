@@ -5,11 +5,12 @@ import { useSelectedUser } from "@/store/useSelectedUser";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useQuery } from "@tanstack/react-query";
 import { getMessages } from "@/actions/message.actions";
+import { useEffect, useRef } from "react";
 
 const MessageList = () => {
   const { selectedUser } = useSelectedUser();
   const { user: currentUser, isLoading: isUserLoading } = useKindeBrowserClient();
-
+  const messageContainerRef = useRef<HTMLDivElement>(null);
   const { data:messages, isLoading: isMessagesLoading } = useQuery({
     queryKey: ["messages", selectedUser?.id],
     queryFn: async () => {
@@ -20,8 +21,14 @@ const MessageList = () => {
   enabled: !!selectedUser && !!currentUser && !isUserLoading
   });
 
+  useEffect(()=>{
+    if(messageContainerRef.current){
+      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+    }
+  },[messages])
+
   return (
-    <div className="w-full overflow-y-auto overflow-x-hidden h-full flex flex-col">
+    <div ref={messageContainerRef} className="w-full overflow-y-auto overflow-x-hidden h-full flex flex-col">
       <AnimatePresence>
         {messages?.map((message, idx) => (
           <motion.div
