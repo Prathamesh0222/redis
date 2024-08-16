@@ -41,7 +41,7 @@ const MessageList = () => {
               opacity: { duration: 0.1 },
               layout: {
                 type: "spring",
-                bounce: "0.3",
+                bounce: 0.3,
                 duration: messages.indexOf(message) * 0.05 + 0.2,
               },
             }}
@@ -58,7 +58,7 @@ const MessageList = () => {
               {message.senderId === selectedUser?.id && (
                 <Avatar className="flex justify-center items-center">
                   <AvatarImage
-                    src={selectedUser?.image}
+                    src={selectedUser?.image || "/user-placeholder.png"}
                     alt="User Image"
                     className="border-2 border-white rounded-full"
                   />
@@ -78,7 +78,7 @@ const MessageList = () => {
               {message.senderId === currentUser?.id && (
                 <Avatar className="flex justify-center items-center">
                   <AvatarImage
-                    src={currentUser?.picture || "/user-placeholder.png"}
+                    src={"/user-placeholder.png"}
                     alt="User Image"
                     className="border-2 border-white rounded-full"
                   />
